@@ -16,6 +16,7 @@ function App() {
           rel="noopener noreferrer"
         >
           First commit
+          Lesli's commit 
         </a>
       </header>
     </div>
