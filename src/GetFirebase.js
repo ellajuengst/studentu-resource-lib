@@ -24,6 +24,7 @@ function GetFirebase() {
     // eslint-disable-next-line
   }, []);
 
+  
   // ADD FUNCTION
   function addResource(newResource) {
     ref
