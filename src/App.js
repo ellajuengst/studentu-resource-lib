@@ -4,14 +4,26 @@
 // import React, {useState, useEffect} from "react";
 // import {} from "./firebase";
 
-import React, {Fragment} from "react";
+import {React} from "react";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import GetFirebase from "./GetFirebase";
 import SnapshotFirebase from "./SnapshotFirebase";
+import {AuthProvider} from "./AuthContext";
+import SignIn from "./SignIn"
 
 function App() {
   const get = false;
   // const get = true; // requires you to refresh to update
-  return <Fragment>{get ? <GetFirebase /> : <SnapshotFirebase /> } </Fragment>
+  return(
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={get ? <GetFirebase /> : <SnapshotFirebase /> }/>
+          <Route path="/login" element={<SignIn />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
 
 export default App;
