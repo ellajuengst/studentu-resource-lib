@@ -16,46 +16,6 @@ function App() {
 
 export default App;
 
-// function App() {
-
-//   const [resources, setResources] = useState([]); 
-//   const [loading, setLoading] = useState(false);
-
-//   const ref = firebase.firestore().collection("resources");
-//   // console.log(ref);
-
-//   function getResources() { // updates realtime?
-//     setLoading(true);
-//     ref.onSnapshot((querySnapshot) => {
-//       const items = [];
-//       querySnapshot.forEach((doc) => {
-//         items.push(doc.data());
-//       });
-//       setResources(items);
-//       setLoading(false);
-//     });
-//   }
-
-//   // function getResources2() {
-//   //   setLoading(true);
-//   //   ref.get().then((item) => {
-//   //     const items = item.docs.map((doc) => doc.data());
-//   //     setResources(items);
-//   //     setLoading(false);
-//   //   });
-//   // }
-
-//   useEffect(() => {
-//     getResources();
-//     // getResources2();
-//   }, []);
-
-
-//   if (loading) {
-//     return <h1>Loading...</h1>;
-//   }
- 
-
 
 //   return (
 //     // <div className = "App">
