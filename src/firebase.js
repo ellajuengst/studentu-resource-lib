@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app' // appears that this is needed for firebase 9 update
+import {getAuth} from "firebase/auth";
 import 'firebase/compat/firestore'; // haven't run into any problems with the import above, but may need to change to this
 
 const firebaseConfig = {
@@ -11,7 +12,8 @@ const firebaseConfig = {
     measurementId: "G-S9S34HQ1VN"
 };
  
-firebase.initializeApp(firebaseConfig);
+const myApp = firebase.initializeApp(firebaseConfig);
+export const auth = getAuth(myApp);
 
 export default firebase;
 

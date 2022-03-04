@@ -1,12 +1,17 @@
 import React, { useState, useEffect, Fragment } from "react";
 import firebase from "./firebase";
 import { v4 as uuidv4 } from "uuid";
+import {useAuth} from "./AuthContext"
+import SignOut from "./SignOut"
+import {useNavigate} from "react-router-dom"
 
 function GetFirebase() {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const {currentUser} = useAuth();
+  const navigate = useNavigate();
 
   const ref = firebase.firestore().collection("resources");
 
@@ -75,8 +80,22 @@ function GetFirebase() {
       });
   }
 
+  function navigateToSignIn() {
+    navigate("/login");
+  }
+
   return (
     <Fragment>
+      {currentUser ? (
+        <>
+          <p>Admin Mode</p>
+          <SignOut />
+        </>
+      ) : 
+        <button onClick={navigateToSignIn}>
+          Admin Login
+        </button>
+      }
       <h1>Resources (GET)</h1>
       <div className="inputBox">
         <h3>Add New</h3>
