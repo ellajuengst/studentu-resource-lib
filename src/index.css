@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,6 +10,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  padding: 1em;
 }
 
 code {
@@ -42,3 +45,18 @@ textarea {
 button {
   margin-bottom: 8px;
 }
+
+#root {
+  width: 100%;
+
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+.card {
+  margin: .5em;
+  padding: 1em;
+}
+

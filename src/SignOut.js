@@ -1,4 +1,5 @@
 import {useAuth} from "./AuthContext"
+import { Button } from 'react-bootstrap';
 
 function SignOut() {
     const {signout} = useAuth();
@@ -8,9 +9,9 @@ function SignOut() {
     }
 
     return(
-        <button onClick={handleSignout}>
+        <Button onClick={handleSignout}>
             Logout
-        </button>
+        </Button>
     )
 }
 

@@ -10,6 +10,7 @@ import GetFirebase from "./GetFirebase";
 import SnapshotFirebase from "./SnapshotFirebase";
 import {AuthProvider} from "./AuthContext";
 import SignIn from "./SignIn"
+import ResourceLibrary from "./pages/ResourceLibrary"
 
 function App() {
   const get = false;
@@ -18,7 +19,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={get ? <GetFirebase /> : <SnapshotFirebase /> }/>
+          <Route path="/" element={get ? <GetFirebase /> : <ResourceLibrary /> }/>
           <Route path="/login" element={<SignIn />} />
         </Routes>
       </AuthProvider>
@@ -27,23 +28,3 @@ function App() {
 }
 
 export default App;
-
-
-//   return (
-//     // <div className = "App">
-//     //   <h1> #firebase firestore database </h1>
-//     // </div>
-//     < div>
-//       <h1>Resources</h1>
-//       {resources.map((resource) => (
-//         <div key = {resource.id}>
-//           <h2>{resource.title}</h2>
-//           <p>{resource.summary}</p>
-          
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default App;
