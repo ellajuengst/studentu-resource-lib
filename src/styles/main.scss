@@ -135,11 +135,7 @@ button {
     margin-top: 1em;
 }
 
-.search-bar {
-    margin-top: 1em;
-    padding: 1em;
-    width: 80%;
-}
+
 
 .resource-library-header {
     margin: 2em;
@@ -196,11 +192,32 @@ button {
 .search-bar-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 1em;
+    padding: 1em;
+
+    @include large {
+        flex-direction: row;
+    }
 }
 
+.search-bar {
+    width: 90%;
 
+    @include tablet {
+        width: 80%;
+    }
+}
+
+.add-resource-btn {
+    margin-top: 1em;
+    @include large {
+        margin-top: 0;
+        margin-left: 1em;
+    }
+}
 
 .categories-brand {
     padding-left: 1em;

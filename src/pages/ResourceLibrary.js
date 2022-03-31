@@ -11,6 +11,7 @@ import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, 
 import CategoryNav from "../components/CategoryNav";
 import TagNav from "../components/TagNav";
 import SearchBar from "../components/SearchBar"
+import AddResource from "../components/AddResourceButton"
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
@@ -65,7 +66,11 @@ export default function ResourceLibrary() {
                 <Col>
                     <div className="search-bar-container">
                       <SearchBar />
+                      {currentUser && 
+                      <AddResource />
+                      }
                     </div>
+                    
                     <Container className="resources-container">
                         {loading ? <p>Loading...</p> : null}
                         <Row>

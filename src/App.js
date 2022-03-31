@@ -11,6 +11,7 @@ import SnapshotFirebase from "./SnapshotFirebase";
 import {AuthProvider} from "./AuthContext";
 import SignIn from "./SignIn"
 import ResourceLibrary from "./pages/ResourceLibrary"
+import CreateResource from "./pages/CreateResource"
 
 function App() {
   const get = false;
@@ -21,6 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={get ? <GetFirebase /> : <ResourceLibrary /> }/>
           <Route path="/login" element={<SignIn />} />
+          <Route path="/create-resource" element={<CreateResource />} />
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>
