@@ -16,6 +16,28 @@ $colors : (
     @return map-get($colors, $color-name);
 }
 
+$tablet: 768px;
+$large: 992px;
+$xlarge: 1500px;
+
+@mixin tablet {
+    @media (min-width: #{$tablet}) {
+        @content;
+    }
+}
+
+@mixin large {
+    @media (min-width: #{$large}) {
+        @content;
+    }
+}
+
+@mixin xlarge {
+    @media (min-width: #{$xlarge}) {
+        @content;
+    }
+}
+
 
 body {
     margin: 0;
@@ -176,4 +198,18 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+
+.categories-brand {
+    padding-left: 1em;
+
+    @include large {
+        display: none;
+    }
+}
+
+.categories-toggler {
+    margin-right: 1em;
 }

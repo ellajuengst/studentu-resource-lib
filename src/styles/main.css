@@ -181,4 +181,18 @@ button {
       -ms-flex-pack: center;
           justify-content: center;
 }
+
+.categories-brand {
+  padding-left: 1em;
+}
+
+@media (min-width: 992px) {
+  .categories-brand {
+    display: none;
+  }
+}
+
+.categories-toggler {
+  margin-right: 1em;
+}
 /*# sourceMappingURL=main.css.map */

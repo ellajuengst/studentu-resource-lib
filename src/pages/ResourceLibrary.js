@@ -59,7 +59,7 @@ export default function ResourceLibrary() {
         <CategoryNav />
         <Container fluid={true}>
             <Row>
-                <Col className="tag-nav-container" sm={2}>
+                <Col className="tag-nav-container" lg={2}>
                     <TagNav />
                 </Col>
                 <Col>

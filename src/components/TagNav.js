@@ -4,7 +4,7 @@ import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
 
 export default function TagNav() {
   return (
-      <Navbar className="flex-column sidebar" expand="sm">
+      <Navbar className="flex-column sidebar" expand="lg">
         <Navbar.Brand className="filters-brand">Filters</Navbar.Brand>
         <Navbar.Toggle aria-controls="filter-sidebar-nav"><div className="arrow-down"><ArrowDown /></div></Navbar.Toggle>
         <Navbar.Collapse id="filter-sidebar-nav">

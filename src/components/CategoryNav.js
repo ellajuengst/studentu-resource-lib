@@ -7,7 +7,8 @@ export default function CategoryNav() {
   return (
       <Navbar className="category-nav" bg="light" expand="lg" p={0}>
         <Container fluid={true}>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Brand className="categories-brand" href="#home">Categories</Navbar.Brand>
+        <Navbar.Toggle className="categories-toggler" aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav
                 activeKey="/all"
