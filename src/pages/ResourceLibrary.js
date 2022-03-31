@@ -10,6 +10,7 @@ import ResourceCard from "../components/ResourceCard";
 import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form } from 'react-bootstrap';
 import CategoryNav from "../components/CategoryNav";
 import TagNav from "../components/TagNav";
+import SearchBar from "../components/SearchBar"
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
@@ -17,6 +18,7 @@ export default function ResourceLibrary() {
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);
   const ref = firebase.firestore().collection("resources");
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   function navigateToSignIn() {
     navigate("/login");
@@ -40,8 +42,8 @@ export default function ResourceLibrary() {
   
   return ( 
     <Container fluid={true}>
-        <Stack direction="horizontal" gap={3}>
-            <h1 className="me-auto">Resource Library</h1>
+        <Stack className="resource-library-header" direction="horizontal" gap={3}>
+            <h1 className="resource-library-title me-auto">Resource Library</h1>
             {currentUser ? (
             <>
             <p>Admin Mode</p>
@@ -57,15 +59,18 @@ export default function ResourceLibrary() {
         <CategoryNav />
         <Container fluid={true}>
             <Row>
-                <Col sm={2}>
+                <Col className="tag-nav-container" sm={2}>
                     <TagNav />
                 </Col>
                 <Col>
-                    <Container>
-                        {loading ? <h1>Loading...</h1> : null}
+                    <div className="search-bar-container">
+                      <SearchBar />
+                    </div>
+                    <Container className="resources-container">
+                        {loading ? <p>Loading...</p> : null}
                         <Row>
                         {resources.map((resource) => (
-                            <Col>
+                            <Col lg={3} md={6} sm={12}>
                             <ResourceCard {...resource} key={resource.title} />
                             </Col>
                         ))}

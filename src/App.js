@@ -15,7 +15,7 @@ import ResourceLibrary from "./pages/ResourceLibrary"
 function App() {
   const get = false;
   // const get = true; // requires you to refresh to update
-  return(
+  return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
