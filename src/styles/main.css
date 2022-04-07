@@ -284,4 +284,8 @@ button {
       -ms-flex-pack: center;
           justify-content: center;
 }
+
+.tags-container .tag-pill:hover {
+  cursor: pointer;
+}
 /*# sourceMappingURL=main.css.map */

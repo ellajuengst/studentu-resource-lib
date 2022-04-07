@@ -262,7 +262,9 @@ button {
         }
     }
 
-    // @include large {
-    //     flex-direction: row;
-    // }
+    .tag-pill:hover {
+        cursor: pointer;
+    }
+
+
 }

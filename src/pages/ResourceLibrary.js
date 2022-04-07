@@ -13,7 +13,6 @@ import TagNav from "../components/TagNav";
 import SearchBar from "../components/SearchBar"
 import AddResource from "../components/AddResourceButton"
 import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
-import {ReactComponent as X} from '../assets/x.svg'
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
@@ -58,10 +57,19 @@ export default function ResourceLibrary() {
     const index = selectedTags.indexOf(tag);
     if (index !== -1) {
       setSelectedTags(selectedTags.filter((e) => e !== tag));
-      e.target.classList.remove('active-link');
     } else {
       setSelectedTags([...selectedTags, tag]);
-      e.target.classList.add('active-link');
+    }
+  }
+
+  function removeTag(e) {
+    const tag = e.target.id; 
+    console.log(e.target.id)  
+    const index = selectedTags.indexOf(tag);
+    if (index !== -1) {
+      setSelectedTags(selectedTags.filter((e) => e !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
     }
   }
 
@@ -70,6 +78,7 @@ export default function ResourceLibrary() {
     getTags();
 
   }, []);
+  
   
   return ( 
     <Container fluid={true}>
@@ -95,16 +104,21 @@ export default function ResourceLibrary() {
                     <Navbar.Brand className="filters-brand">Filters</Navbar.Brand>
                     <Navbar.Toggle aria-controls="filter-sidebar-nav"><div className="arrow-down"><ArrowDown /></div></Navbar.Toggle>
                     <Navbar.Collapse id="filter-sidebar-nav">
-                    <Nav className="bg-light flex-column sidebar"
-                    // activeKey={"/home"}
-                    // onSelect={selectedKey => console.log(selectedKey)}
-                    >
+                    <Nav className="bg-light flex-column sidebar">
                         {tags.map((tag) => {
-                          return (
-                            <Nav.Item className="sidebar-item">
-                              <Nav.Link className="sidebar-link" onClick={selectTag}>{tag.name}</Nav.Link>
-                            </Nav.Item>
-                          )
+                          if (selectedTags.includes(tag.name)) {
+                            return (
+                              <Nav.Item className="sidebar-item">
+                                <Nav.Link className="sidebar-link active-link" onClick={selectTag}>{tag.name}</Nav.Link>
+                              </Nav.Item>
+                            )
+                          } else {
+                            return (
+                              <Nav.Item className="sidebar-item">
+                                <Nav.Link className="sidebar-link" onClick={selectTag}>{tag.name}</Nav.Link>
+                              </Nav.Item>
+                            )
+                          }
                         })}
                     </Nav>
                     </Navbar.Collapse>
@@ -123,7 +137,7 @@ export default function ResourceLibrary() {
                     <div className="tags-container">
                     {selectedTags.map((tag) => {
                         return (
-                        <div className="tag-pill" key={tag}>{tag}<div className="x"><X /></div></div>
+                        <div onClick={removeTag} id={tag} className="tag-pill" key={tag}>{tag}<img id={tag} className="x" src={require('../assets/x.png')}></img></div>
                         )
                       })}
                     </div>
@@ -138,7 +152,6 @@ export default function ResourceLibrary() {
                         ))}
                         </Row>
                     </Container>
-                    
                 </Col>
             </Row>
         </Container>
