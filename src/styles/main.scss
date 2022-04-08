@@ -117,12 +117,12 @@ button {
 
 }
 
-.navbar-light .navbar-nav .nav-link.active {
-    color: color(blue);
+.navbar-light .navbar-nav .nav-link.active-link {
+    color: color(aqua);
     font-weight: bold;
 }
 
-.navbar-light .navbar-nav .nav-link.active:hover {
+.navbar-light .navbar-nav .nav-link.active-link:hover {
     background-color: color(grey1);
 }
 
@@ -229,4 +229,42 @@ button {
 
 .categories-toggler {
     margin-right: 1em;
+}
+
+.tags-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+
+    .tag-pill {
+        margin: 0 1em;
+        background-color: color(aqua);
+        color: white;
+        padding: 0.5em 1em;
+        border-radius:30px;
+        box-shadow: 3px 3px 10px 1px #e9e9e9;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        
+        .x {
+            width:10px;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .tag-pill:hover {
+        cursor: pointer;
+    }
+
+
 }

@@ -12,14 +12,17 @@ import CategoryNav from "../components/CategoryNav";
 import TagNav from "../components/TagNav";
 import SearchBar from "../components/SearchBar"
 import AddResource from "../components/AddResourceButton"
+import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);
-  const ref = firebase.firestore().collection("resources");
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  const ref = firebase.firestore();
+  const [selectedTags, setSelectedTags] = useState([]);
 
   function navigateToSignIn() {
     navigate("/login");
@@ -27,7 +30,8 @@ export default function ResourceLibrary() {
 
   function getResources() {
     setLoading(true);
-    ref.onSnapshot((querySnapshot) => {
+    const resourcesRef = ref.collection("resources")
+    resourcesRef.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data());
@@ -37,9 +41,44 @@ export default function ResourceLibrary() {
     });
   }
 
+  function getTags() {
+    const tagsRef = ref.collection("tags")
+    tagsRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setTags(items);
+    });
+  }
+
+  function selectTag(e) {
+    const tag = e.target.innerHTML;   
+    const index = selectedTags.indexOf(tag);
+    if (index !== -1) {
+      setSelectedTags(selectedTags.filter((e) => e !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  }
+
+  function removeTag(e) {
+    const tag = e.target.id; 
+    console.log(e.target.id)  
+    const index = selectedTags.indexOf(tag);
+    if (index !== -1) {
+      setSelectedTags(selectedTags.filter((e) => e !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  }
+
   useEffect(() => {
     getResources();
+    getTags();
+
   }, []);
+  
   
   return ( 
     <Container fluid={true}>
@@ -61,7 +100,29 @@ export default function ResourceLibrary() {
         <Container fluid={true}>
             <Row>
                 <Col className="tag-nav-container" lg={2}>
-                    <TagNav />
+                  <Navbar className="flex-column sidebar" expand="lg">
+                    <Navbar.Brand className="filters-brand">Filters</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="filter-sidebar-nav"><div className="arrow-down"><ArrowDown /></div></Navbar.Toggle>
+                    <Navbar.Collapse id="filter-sidebar-nav">
+                    <Nav className="bg-light flex-column sidebar">
+                        {tags.map((tag) => {
+                          if (selectedTags.includes(tag.name)) {
+                            return (
+                              <Nav.Item className="sidebar-item">
+                                <Nav.Link className="sidebar-link active-link" onClick={selectTag}>{tag.name}</Nav.Link>
+                              </Nav.Item>
+                            )
+                          } else {
+                            return (
+                              <Nav.Item className="sidebar-item">
+                                <Nav.Link className="sidebar-link" onClick={selectTag}>{tag.name}</Nav.Link>
+                              </Nav.Item>
+                            )
+                          }
+                        })}
+                    </Nav>
+                    </Navbar.Collapse>
+                  </Navbar>
                 </Col>
                 <Col>
                     <div className="search-bar-container">
@@ -69,6 +130,16 @@ export default function ResourceLibrary() {
                       {currentUser && 
                       <AddResource />
                       }
+                      
+                      
+                     
+                    </div>
+                    <div className="tags-container">
+                    {selectedTags.map((tag) => {
+                        return (
+                        <div onClick={removeTag} id={tag} className="tag-pill" key={tag}>{tag}<img id={tag} className="x" src={require('../assets/x.png')}></img></div>
+                        )
+                      })}
                     </div>
                     
                     <Container className="resources-container">
@@ -81,7 +152,6 @@ export default function ResourceLibrary() {
                         ))}
                         </Row>
                     </Container>
-                    
                 </Col>
             </Row>
         </Container>
