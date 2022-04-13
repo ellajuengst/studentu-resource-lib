@@ -7,12 +7,13 @@ import SignOut from "../SignOut"
 import {getResources} from "../firebase"
 import firebase from "../firebase";
 import ResourceCard from "../components/ResourceCard";
-import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form } from 'react-bootstrap';
+import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form, FormControl } from 'react-bootstrap';
 import CategoryNav from "../components/CategoryNav";
 import TagNav from "../components/TagNav";
 import SearchBar from "../components/SearchBar"
 import AddResource from "../components/AddResourceButton"
 import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
@@ -23,6 +24,8 @@ export default function ResourceLibrary() {
 
   const ref = firebase.firestore();
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedResources, setSelectedResources] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   function navigateToSignIn() {
     navigate("/login");
@@ -37,6 +40,8 @@ export default function ResourceLibrary() {
         items.push(doc.data());
       });
       setResources(items);
+      setSelectedResources(items);
+
       setLoading(false);
     });
   }
@@ -73,6 +78,16 @@ export default function ResourceLibrary() {
     }
   }
 
+  
+  function handleSelected(selected) {
+    // navigate to new page for resource
+  }
+
+  function handleSubmit(event) {
+    
+  }
+
+
   useEffect(() => {
     getResources();
     getTags();
@@ -86,8 +101,14 @@ export default function ResourceLibrary() {
             <h1 className="resource-library-title me-auto">Resource Library</h1>
             {currentUser ? (
             <>
-            <p>Admin Mode</p>
+           <Button variant="outline-secondary" disabled>Admin Mode</Button>
+           <div className="header-btn-holder">
+           <AddResource />
             <SignOut />
+           </div>
+            
+
+          
             </>
             ) : 
                 <Button onClick={navigateToSignIn}>
@@ -126,13 +147,32 @@ export default function ResourceLibrary() {
                 </Col>
                 <Col>
                     <div className="search-bar-container">
-                      <SearchBar />
-                      {currentUser && 
-                      <AddResource />
-                      }
+                    <Form.Group className="search-div">
+                      <Form className="search-bar d-flex">
+  
+                      <Typeahead
+                        id="basic-typeahead-single"
+                        labelKey={option => `${option.title}: ${option.desc}`}
+                        options={resources}
+                        placeholder="Search for a resource..."
+                        onChange={handleSelected}
+        
+                      />
+                      </Form>
+
+                    </Form.Group>
+                      {/* <Form className="search-bar d-flex">
+                        <FormControl
+                          type="search"
+                          placeholder="Search"
+                          className="me-2"
+                          aria-label="Search"
+                        />
+                        <Button variant="outline-secondary">Search</Button>
+                      </Form> */}
+                    
                       
                       
-                     
                     </div>
                     <div className="tags-container">
                     {selectedTags.map((tag) => {
@@ -145,7 +185,7 @@ export default function ResourceLibrary() {
                     <Container className="resources-container">
                         {loading ? <p>Loading...</p> : null}
                         <Row>
-                        {resources.map((resource) => (
+                        {selectedResources.map((resource) => (
                             <Col lg={3} md={6} sm={12}>
                             <ResourceCard {...resource} key={resource.title} />
                             </Col>
