@@ -353,4 +353,48 @@ textarea {
 .search-bar .rbt {
   width: 100%;
 }
+
+.sign-in {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 3em;
+}
+
+.sign-in Form {
+  width: 50%;
+}
+
+.sign-in Button {
+  margin-left: 0;
+  margin-top: 1em;
+}
+
+.sign-in .error {
+  color: #f14c4c;
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+.sign-in .back-btn {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-left: 3em;
+  color: #407CCC;
+}
+
+.required {
+  color: red;
+}
 /*# sourceMappingURL=main.css.map */

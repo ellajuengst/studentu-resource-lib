@@ -9,7 +9,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import GetFirebase from "./GetFirebase";
 import SnapshotFirebase from "./SnapshotFirebase";
 import {AuthProvider} from "./AuthContext";
-import SignIn from "./SignIn"
+import SignIn from "./pages/SignIn"
 import ResourceLibrary from "./pages/ResourceLibrary"
 import CreateResource from "./pages/CreateResource"
 
