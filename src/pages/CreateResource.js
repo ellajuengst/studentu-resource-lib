@@ -42,8 +42,8 @@ export default function CreateResource() {
       type,
       reference,
       category: values.category,
-      tags: values.tags,
-      id: uuidv4(),
+      tags: values.tags.map((tag) => tag.name),
+      id: uuidv4()
     }
     resourceRef
       //.doc() use if for some reason you want that firestore generates the id
@@ -188,7 +188,7 @@ export default function CreateResource() {
           onChange={handleTagChange}
           options={tagList}
           placeholder="Select tags"
-          selected={values.tag}
+          selected={values.tags}
         />
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Select File OR Add a Link</Form.Label>
