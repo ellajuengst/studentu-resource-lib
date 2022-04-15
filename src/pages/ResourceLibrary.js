@@ -21,11 +21,13 @@ export default function ResourceLibrary() {
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);
   const [tags, setTags] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const ref = firebase.firestore();
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
   const [selectedResources, setSelectedResources] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
 
   function navigateToSignIn() {
     navigate("/login");
@@ -57,11 +59,23 @@ export default function ResourceLibrary() {
     });
   }
 
+  function getCategories() {
+    const catRef = ref.collection("categories")
+    catRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setCategories(items);
+    });
+  }
+
   function selectTag(e) {
     const tag = e.target.innerHTML;   
     const index = selectedTags.indexOf(tag);
     if (index !== -1) {
       setSelectedTags(selectedTags.filter((e) => e !== tag));
+      
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
@@ -83,14 +97,28 @@ export default function ResourceLibrary() {
     // navigate to new page for resource
   }
 
-  function handleSubmit(event) {
-    
+
+  function handleCategorySelect(e) {
+    console.log(e.target.innerHTML)
+    setSelectedCategory(e.target.innerHTML)
   }
 
+  function checkIfRender(r) {
+    if (selectedTags.length == 0) {
+      return true;
+    }
+    for (let i=0; i<selectedTags.length; i++) {
+      if (r.tags.indexOf(selectedTags[i]) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   useEffect(() => {
     getResources();
     getTags();
+    getCategories();
 
   }, []);
   
@@ -106,9 +134,6 @@ export default function ResourceLibrary() {
            <AddResource />
             <SignOut />
            </div>
-            
-
-          
             </>
             ) : 
                 <Button onClick={navigateToSignIn}>
@@ -117,7 +142,7 @@ export default function ResourceLibrary() {
             }
         </Stack>
        
-        <CategoryNav />
+        <CategoryNav selectedCategory={selectedCategory} categories={categories} handleClick={handleCategorySelect}/>
         <Container fluid={true}>
             <Row>
                 <Col className="tag-nav-container" lg={2}>
@@ -161,17 +186,6 @@ export default function ResourceLibrary() {
                       </Form>
 
                     </Form.Group>
-                      {/* <Form className="search-bar d-flex">
-                        <FormControl
-                          type="search"
-                          placeholder="Search"
-                          className="me-2"
-                          aria-label="Search"
-                        />
-                        <Button variant="outline-secondary">Search</Button>
-                      </Form> */}
-                    
-                      
                       
                     </div>
                     <div className="tags-container">
@@ -184,8 +198,15 @@ export default function ResourceLibrary() {
                     
                     <Container className="resources-container">
                         {loading ? <p>Loading...</p> : null}
-                        <Row>
-                        {selectedResources.map((resource) => (
+                          <Row>
+                          {selectedResources.filter((r) => {
+                            if (selectedCategory == 'All' || r.category == selectedCategory) {
+                              return checkIfRender(r)
+                            } else {
+                              return false;
+                            }
+                          
+                        }).map((resource) => (
                             <Col lg={3} md={6} sm={12}>
                             <ResourceCard {...resource} key={resource.title} />
                             </Col>
