@@ -218,7 +218,7 @@ export default function ResourceLibrary() {
                           
                         }).map((resource) => (
                             <Col lg={3} md={6} sm={12}>
-                            <ResourceCard {...resource } key={resource.title} />
+                            <ResourceCard {...resource } key={resource.id} />
 
                             </Col>
                         ))}
