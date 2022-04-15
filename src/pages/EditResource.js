@@ -48,13 +48,14 @@ function editResource(values) {
   //   const fileRef = ref(storage, refID);
   //   uploadBytes(fileRef, values.attachment)
   // }
-
+  
   const updatedResource = {
     id: values.id,
     title: values.title,
     desc: values.desc,
     category: values.category,
-    tags: values.tags,
+    tags: values.tags.map((tag) => (typeof tag == "string" ? tag : tag.name)),
+    // tags: values.tags,
     reference: values.link, // attachment = string id of storage, link = string url
     type: values.type // either attachment or link
   }
@@ -151,6 +152,7 @@ const validate = () => {
 }
 
 const handleUpdate = () => {
+  console.log(values)
   if (validate(values)) {
     editResource(values)
   }
