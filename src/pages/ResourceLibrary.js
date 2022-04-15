@@ -134,6 +134,7 @@ export default function ResourceLibrary() {
            <AddResource />
             <SignOut />
            </div>
+            
             </>
             ) : 
                 <Button onClick={navigateToSignIn}>
@@ -186,6 +187,15 @@ export default function ResourceLibrary() {
                       </Form>
 
                     </Form.Group>
+                      {/* <Form className="search-bar d-flex">
+                        <FormControl
+                          type="search"
+                          placeholder="Search"
+                          className="me-2"
+                          aria-label="Search"
+                        />
+                        <Button variant="outline-secondary">Search</Button>
+                      </Form> */}
                       
                     </div>
                     <div className="tags-container">
@@ -208,7 +218,8 @@ export default function ResourceLibrary() {
                           
                         }).map((resource) => (
                             <Col lg={3} md={6} sm={12}>
-                            <ResourceCard {...resource} key={resource.title} />
+                            <ResourceCard {...resource } key={resource.title} />
+
                             </Col>
                         ))}
                         </Row>
