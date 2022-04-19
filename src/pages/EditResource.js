@@ -94,7 +94,7 @@ function getTagList() {
   firebase.firestore().collection("tags").onSnapshot((querySnapshot) => {
     const items = [];
     querySnapshot.forEach((doc) => {
-      items.push(doc.data());
+      items.push(doc.data().name);
     });
     setTagList(items);
   });
@@ -116,6 +116,12 @@ const handleFormChange = (event) => {
 };
 
 const handleTagChange = (tags) => {
+  for(let i = 0; i < tags.length; i++){
+    if(typeof tags[i] !== 'string') {
+      tags[i] = tags[i].name;
+      console.log(tags[i])
+    }
+  }
   setValues((values) => ({
     ...values,
     tags: tags,
@@ -151,9 +157,20 @@ const validate = () => {
   }
 }
 
+function addTag(tagName) {
+  const newTag = {
+    name: tagName, 
+  }
+  firebase.firestore().collection("tags").add(newTag);
+}
+
 const handleUpdate = () => {
-  console.log(values)
-  if (validate(values)) {
+  if(validate(values)) {
+    for(const tag of values.tags) {
+      if(!tagList.includes(tag)) {
+        addTag(tag)
+      }
+    }
     editResource(values)
   }
 }
@@ -211,10 +228,12 @@ return (
 
       <label for="tags" >Tags</label>
       <Typeahead
+        allowNew
         id="tags"
         labelKey="name"
         multiple
         name="tags"
+        newSelectionPrefix="Select to add a new tag: "
         onChange={handleTagChange}
         options={tagList}
         placeholder="Select tags"
