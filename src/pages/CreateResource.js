@@ -20,11 +20,12 @@ export default function CreateResource() {
   const [formerrors, setFormErrors] = useState({});
 
   const resourceRef = firebase.firestore().collection("resources");
+  const tagRef = firebase.firestore().collection("tags");
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
   const [tagList, setTagList] = useState([]);
-  
-  function addResource(values) {
+
+  function addResource() {
     let type, reference;
     const refID = uuidv4()
     if(values.attachment != null) {
@@ -42,7 +43,7 @@ export default function CreateResource() {
       type,
       reference,
       category: values.category,
-      tags: values.tags.map((tag) => tag.name),
+      tags: values.tags,
       id: uuidv4()
     }
     resourceRef
@@ -55,6 +56,13 @@ export default function CreateResource() {
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  function addTag(tagName) {
+    const newTag = {
+      name: tagName, 
+    }
+    tagRef.add(newTag);
   }
 
   function getCategoryList() {
@@ -71,7 +79,7 @@ export default function CreateResource() {
     firebase.firestore().collection("tags").onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        items.push(doc.data().name);
       });
       setTagList(items);
     });
@@ -93,10 +101,16 @@ export default function CreateResource() {
    };
 
    const handleTagChange = (tags) => {
-      setValues((values) => ({
-        ...values,
-        tags: tags,
-      }));
+    for(let i = 0; i < tags.length; i++){
+      if(typeof tags[i] !== 'string') {
+        tags[i] = tags[i].name;
+        console.log(tags[i])
+      }
+    }
+    setValues((values) => ({
+      ...values,
+      tags: tags,
+    }));
    }
 
    const validate = () => {
@@ -130,6 +144,11 @@ export default function CreateResource() {
   
   const handleSubmit = () => {
     if(validate(values)) {
+      for(const tag of values.tags) {
+        if(!tagList.includes(tag)) {
+          addTag(tag)
+        }
+      }
       addResource(values)
     }
   }
@@ -181,10 +200,12 @@ export default function CreateResource() {
           <p className="text-danger">{formerrors.category}</p>
         )}
         <Typeahead
+          allowNew
           id="tags"
           labelKey="name"
           multiple
           name="tags"
+          newSelectionPrefix="Select to add a new tag: "
           onChange={handleTagChange}
           options={tagList}
           placeholder="Select tags"
