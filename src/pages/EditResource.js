@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate, useLocation } from "react-router-dom"
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { storage } from "../firebase"
-import { ref, uploadBytes} from "firebase/storage";
+import { deleteObject, ref, uploadBytes} from "firebase/storage";
 
 export default function EditResource(updatedResource) {
   const { state } = useLocation();
@@ -119,7 +119,6 @@ const handleTagChange = (tags) => {
   for(let i = 0; i < tags.length; i++){
     if(typeof tags[i] !== 'string') {
       tags[i] = tags[i].name;
-      console.log(tags[i])
     }
   }
   setValues((values) => ({
@@ -173,6 +172,25 @@ const handleUpdate = () => {
     }
     editResource(values)
   }
+}
+
+async function deleteResource() {
+  // delete attachment from stoage if applicable
+  if(values.type == "attachment") {
+    const fileRef = ref(storage, values.reference);
+    deleteObject(fileRef)
+  }
+
+  // delete resource document from collection
+  resourceRef
+    .doc(values.id)
+    .delete()
+    .then(() => {
+      navigate('/')
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 useEffect(() => {
@@ -260,6 +278,7 @@ return (
       <button onClick={handleUpdate}>
         Update
       </button>
+      <Button variant="danger" onClick={deleteResource}>Delete Resource</Button>
     </div>
     <hr />
   </div>

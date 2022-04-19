@@ -43,7 +43,7 @@ export default function CreateResource() {
       type,
       reference,
       category: values.category,
-      tags: values.tags.map((tag) => tag.name),
+      tags: values.tags,
       id: uuidv4()
     }
     resourceRef
