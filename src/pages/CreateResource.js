@@ -43,8 +43,8 @@ export default function CreateResource() {
       type,
       reference,
       category: values.category,
-      tags: values.tags,
-      id: uuidv4(),
+      tags: values.tags.map((tag) => tag.name),
+      id: uuidv4()
     }
     resourceRef
       //.doc() use if for some reason you want that firestore generates the id

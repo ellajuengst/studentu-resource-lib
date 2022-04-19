@@ -7,12 +7,13 @@ import SignOut from "../SignOut"
 import {getResources} from "../firebase"
 import firebase from "../firebase";
 import ResourceCard from "../components/ResourceCard";
-import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form } from 'react-bootstrap';
+import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form, FormControl } from 'react-bootstrap';
 import CategoryNav from "../components/CategoryNav";
 import TagNav from "../components/TagNav";
 import SearchBar from "../components/SearchBar"
 import AddResource from "../components/AddResourceButton"
 import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
@@ -20,9 +21,13 @@ export default function ResourceLibrary() {
   const [loading, setLoading] = useState(false);
   const [resources, setResources] = useState([]);
   const [tags, setTags] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const ref = firebase.firestore();
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const [selectedResources, setSelectedResources] = useState([]);
 
   function navigateToSignIn() {
     navigate("/login");
@@ -37,6 +42,8 @@ export default function ResourceLibrary() {
         items.push(doc.data());
       });
       setResources(items);
+      setSelectedResources(items);
+
       setLoading(false);
     });
   }
@@ -52,11 +59,23 @@ export default function ResourceLibrary() {
     });
   }
 
+  function getCategories() {
+    const catRef = ref.collection("categories")
+    catRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setCategories(items);
+    });
+  }
+
   function selectTag(e) {
     const tag = e.target.innerHTML;   
     const index = selectedTags.indexOf(tag);
     if (index !== -1) {
       setSelectedTags(selectedTags.filter((e) => e !== tag));
+      
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
@@ -73,9 +92,33 @@ export default function ResourceLibrary() {
     }
   }
 
+  
+  function handleSelected(selected) {
+    // navigate to new page for resource
+  }
+
+
+  function handleCategorySelect(e) {
+    console.log(e.target.innerHTML)
+    setSelectedCategory(e.target.innerHTML)
+  }
+
+  function checkIfRender(r) {
+    if (selectedTags.length == 0) {
+      return true;
+    }
+    for (let i=0; i<selectedTags.length; i++) {
+      if (r.tags.indexOf(selectedTags[i]) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   useEffect(() => {
     getResources();
     getTags();
+    getCategories();
 
   }, []);
   
@@ -86,8 +129,12 @@ export default function ResourceLibrary() {
             <h1 className="resource-library-title me-auto">Resource Library</h1>
             {currentUser ? (
             <>
-            <p>Admin Mode</p>
+           <Button variant="outline-secondary" disabled>Admin Mode</Button>
+           <div className="header-btn-holder">
+           <AddResource />
             <SignOut />
+           </div>
+            
             </>
             ) : 
                 <Button onClick={navigateToSignIn}>
@@ -96,7 +143,7 @@ export default function ResourceLibrary() {
             }
         </Stack>
        
-        <CategoryNav />
+        <CategoryNav selectedCategory={selectedCategory} categories={categories} handleClick={handleCategorySelect}/>
         <Container fluid={true}>
             <Row>
                 <Col className="tag-nav-container" lg={2}>
@@ -126,13 +173,30 @@ export default function ResourceLibrary() {
                 </Col>
                 <Col>
                     <div className="search-bar-container">
-                      <SearchBar />
-                      {currentUser && 
-                      <AddResource />
-                      }
+                    <Form.Group className="search-div">
+                      <Form className="search-bar d-flex">
+  
+                      <Typeahead
+                        id="basic-typeahead-single"
+                        labelKey={option => `${option.title}: ${option.desc}`}
+                        options={resources}
+                        placeholder="Search for a resource..."
+                        onChange={handleSelected}
+        
+                      />
+                      </Form>
+
+                    </Form.Group>
+                      {/* <Form className="search-bar d-flex">
+                        <FormControl
+                          type="search"
+                          placeholder="Search"
+                          className="me-2"
+                          aria-label="Search"
+                        />
+                        <Button variant="outline-secondary">Search</Button>
+                      </Form> */}
                       
-                      
-                     
                     </div>
                     <div className="tags-container">
                     {selectedTags.map((tag) => {
@@ -144,10 +208,18 @@ export default function ResourceLibrary() {
                     
                     <Container className="resources-container">
                         {loading ? <p>Loading...</p> : null}
-                        <Row>
-                        {resources.map((resource) => (
+                          <Row>
+                          {selectedResources.filter((r) => {
+                            if (selectedCategory == 'All' || r.category == selectedCategory) {
+                              return checkIfRender(r)
+                            } else {
+                              return false;
+                            }
+                          
+                        }).map((resource) => (
                             <Col lg={3} md={6} sm={12}>
-                            <ResourceCard {...resource} key={resource.title} />
+                            <ResourceCard {...resource } key={resource.id} />
+
                             </Col>
                         ))}
                         </Row>
