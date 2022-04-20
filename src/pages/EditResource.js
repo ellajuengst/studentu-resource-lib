@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate, useLocation } from "react-router-dom"
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, FormGroup } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { storage } from "../firebase"
@@ -199,10 +199,11 @@ useEffect(() => {
 }, []);
 
 return (
-  <div>
+  <div className="edit-r-Container">
     <h1>Edit Resource</h1>
     <div className="inputBox">
-      <label for="title" >Title</label>
+      <Form.Group className="form-group">
+      <Form.Label>Resource Title <span className="required">*</span></Form.Label>
       <Form.Control
         type="text"
         name="title"
@@ -213,11 +214,14 @@ return (
       {formerrors.title && (
         <p className="text-danger">{formerrors.title}</p>
       )}
-
-      <label for="desc" >Description</label>
+      </Form.Group>
+     
+      <Form.Group className="form-group">
+      <Form.Label>Resource Description <span className="required">*</span></Form.Label>
       <Form.Control
         type="textarea"
         name="desc"
+        as="textarea"
         placeholder="Resource Description"
         value={values.desc}
         onChange={handleFormChange}
@@ -225,8 +229,10 @@ return (
       {formerrors.desc && (
         <p className="text-danger">{formerrors.desc}</p>
       )}
-
-      <label for="category" >Category</label>
+      </Form.Group>
+      
+      <Form.Group className="form-group">
+      <Form.Label for="category" >Category <span className="required">*</span></Form.Label>
       <Form.Select
         id="category"
         name="category"
@@ -243,27 +249,33 @@ return (
       {formerrors.category && (
         <p className="text-danger">{formerrors.category}</p>
       )}
-
-      <label for="tags" >Tags</label>
-      <Typeahead
-        allowNew
-        id="tags"
-        labelKey="name"
-        multiple
-        name="tags"
-        newSelectionPrefix="Select to add a new tag: "
-        onChange={handleTagChange}
-        options={tagList}
-        placeholder="Select tags"
-        selected={values.tags}
-      />
-      <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Select File OR Add a Link</Form.Label>
+      </Form.Group>
+      
+      <Form.Group className="form-group">
+        <Form.Label for="tags" >Tags</Form.Label>
+        <Typeahead
+          allowNew
+          id="tags"
+          labelKey="name"
+          multiple
+          name="tags"
+          newSelectionPrefix="Select to add a new tag: "
+          onChange={handleTagChange}
+          options={tagList}
+          placeholder="Select tags"
+          selected={values.tags}
+        />
+      </Form.Group>
+      
+      <Form.Group controlId="formFile" className="form-group mb-3">
+        <Form.Label>Select File <b>OR</b> Add a Link <span className="required">*</span></Form.Label>
         <Form.Control
           type="file"
           name="attachment"
           onChange={handleFormChange}
         />
+        <div className="flex-center"><hr style={{color: "black", width: "40%"}} /><b className="or">OR</b><hr style={{color: "black", width: "40%"}} /></div>
+
         <Form.Control
           type="text"
           name="link"
@@ -271,14 +283,16 @@ return (
           onChange={handleFormChange}
           placeholder="Paste the resource link"
         />
-      </Form.Group>
-      {formerrors.ref && (
+         {formerrors.ref && (
         <p className="text-danger">{formerrors.ref}</p>
-      )}
-      <button onClick={handleUpdate}>
-        Update
-      </button>
+        )}
+      </Form.Group>
+      <div className="btn-holder">
+      
       <Button variant="danger" onClick={deleteResource}>Delete Resource</Button>
+      <Button onClick={handleUpdate}>Update</Button>
+      </div>
+     
     </div>
     <hr />
   </div>

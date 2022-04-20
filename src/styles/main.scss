@@ -344,6 +344,50 @@ textarea {
 }
 
 .required {
-    color: red;
+    color: rgb(255, 56, 56);
 }
 
+
+.add-r-Container,.edit-r-Container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2em;
+
+    .inputBox {
+        width: 50%;
+        margin: 1em;
+    }
+
+    .form-group {
+        margin: .5em 0;
+    }
+
+    button {
+        width: 50%;
+        margin: 0 .5em;
+    }
+
+    .btn-holder {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: .5em 0;
+
+    .or {
+        margin: 0 1em;
+    }
+}

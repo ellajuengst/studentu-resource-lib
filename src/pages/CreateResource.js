@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 import {useNavigate} from "react-router-dom"
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import {storage} from "../firebase"
@@ -159,30 +159,39 @@ export default function CreateResource() {
   }, []);
 
   return (
-  <div>
+  <div className="add-r-Container">
       <h1>Create Resource</h1>
       <div className="inputBox">
-        <h3>Add New</h3>
-        <Form.Control
-          type="text"
-          name="title"
-          placeholder = "Resource Title"
-          value={values.title}
-          onChange={handleFormChange}
-        />
-        {formerrors.title && (
-          <p className="text-danger">{formerrors.title}</p>
-        )}
-        <Form.Control
-          type="textarea"
-          name="desc"
-          placeholder = "Resource Description"
-          value={values.desc}
-          onChange={handleFormChange}
-        />
-        {formerrors.desc && (
-          <p className="text-danger">{formerrors.desc}</p>
-        )}
+        <h3>Add New Resource Information</h3>
+        <Form.Group className="form-group">
+          <Form.Label>Resource Title <span className="required">*</span></Form.Label>
+          <Form.Control
+            type="text"
+            name="title"
+            placeholder = "Resource Title"
+            value={values.title}
+            onChange={handleFormChange}
+          />
+          {formerrors.title && (
+            <p className="text-danger">{formerrors.title}</p>
+          )}
+        </Form.Group>
+        <Form.Group className="form-group">
+          <Form.Label>Resource Description <span className="required">*</span></Form.Label>
+          <Form.Control
+            type="textarea"
+            as="textarea"
+            name="desc"
+            placeholder = "Resource Description"
+            value={values.desc}
+            onChange={handleFormChange}
+          />
+          {formerrors.desc && (
+            <p className="text-danger">{formerrors.desc}</p>
+          )}
+        </Form.Group>
+        <Form.Group className="form-group">
+          <Form.Label>Category <span className="required">*</span></Form.Label>
         <Form.Select
           id="category" 
           name="category"
@@ -199,25 +208,32 @@ export default function CreateResource() {
         {formerrors.category && (
           <p className="text-danger">{formerrors.category}</p>
         )}
-        <Typeahead
-          allowNew
-          id="tags"
-          labelKey="name"
-          multiple
-          name="tags"
-          newSelectionPrefix="Select to add a new tag: "
-          onChange={handleTagChange}
-          options={tagList}
-          placeholder="Select tags"
-          selected={values.tags}
-        />
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Select File OR Add a Link</Form.Label>
+        </Form.Group>
+        <Form.Group className="form-group">
+          <Form.Label>Tags</Form.Label>
+          <Typeahead
+            allowNew
+            id="tags"
+            labelKey="name"
+            multiple
+            name="tags"
+            newSelectionPrefix="Select to add a new tag: "
+            onChange={handleTagChange}
+            options={tagList}
+            placeholder="Select tags"
+            selected={values.tags}
+          />
+        </Form.Group>
+        
+        
+        <Form.Group controlId="formFile" className="mb-3 form-group">
+          <Form.Label>Select File <b>OR</b> Add a Link <span className="required">*</span></Form.Label>
           <Form.Control 
             type="file" 
             name="attachment"
             onChange={handleFormChange}
           />
+          <div className="flex-center"><hr style={{color: "black", width: "40%"}} /><b className="or">OR</b><hr style={{color: "black", width: "40%"}} /></div>
           <Form.Control 
             type="text" 
             name="link"
@@ -225,13 +241,16 @@ export default function CreateResource() {
             onChange={handleFormChange}
             placeholder="Paste the resource link"
           />
-        </Form.Group>
-        {formerrors.ref && (
+          {formerrors.ref && (
           <p className="text-danger">{formerrors.ref}</p>
-        )}
-        <button onClick={handleSubmit}>
-          Submit
-        </button>
+          )}
+        </Form.Group>
+        <div className="btn-holder">
+          <Button onClick={handleSubmit}>
+            Submit
+          </Button>
+        </div>
+       
       </div>
       <hr />
     </div>
