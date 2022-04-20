@@ -3,6 +3,8 @@ import { Card, Button } from 'react-bootstrap';
 import {useAuth} from "../AuthContext"
 import {useNavigate} from "react-router-dom"
 
+import { Link } from 'react-router-dom';
+
 export default function ResourceCard(resource) {
     const {currentUser} = useAuth();
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ export default function ResourceCard(resource) {
 
     let title = resource.title;
     let desc = resource.desc;
+    let id = resource.id;
 
 
     return (
@@ -35,6 +38,10 @@ export default function ResourceCard(resource) {
                     
                 ) : <Button >View</Button>
                 }
+
+                <Link to={`/Resource/${id}`} key={id}>
+                    View 
+                </Link>
             </Card.Body>
         </Card>
     )
