@@ -31,17 +31,15 @@ export default function ResourceCard(resource) {
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{desc}</Card.Text>
-                {currentUser ? (
-                    <>
-                        <Button onClick = {navigateToEditResource}>Edit</Button>     
-                    </>
-                    
-                ) : <Button >View</Button>
-                }
+                
 
-                <Link to={`/Resource/${id}`} key={id}>
+                <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id}>
                     View 
-                </Link>
+                </Button>
+                {currentUser && (
+                        <Button variant="link" onClick={navigateToEditResource}>Edit</Button>     
+                    ) 
+                }
             </Card.Body>
         </Card>
     )

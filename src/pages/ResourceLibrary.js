@@ -84,7 +84,6 @@ export default function ResourceLibrary() {
 
   function removeTag(e) {
     const tag = e.target.id; 
-    console.log(e.target.id)  
     const index = selectedTags.indexOf(tag);
     if (index !== -1) {
       setSelectedTags(selectedTags.filter((e) => e !== tag));
@@ -95,7 +94,8 @@ export default function ResourceLibrary() {
 
   
   function handleSelected(selected) {
-    // navigate to new page for resource
+    const resource = selected[0];
+    navigate(`/Resource/${resource.id}`);
   }
 
 
@@ -109,11 +109,11 @@ export default function ResourceLibrary() {
       return true;
     }
     for (let i=0; i<selectedTags.length; i++) {
-      if (r.tags.indexOf(selectedTags[i]) !== -1) {
-        return true;
+      if (r.tags.indexOf(selectedTags[i]) == -1) {
+        return false
       }
     }
-    return false;
+    return true;
   }
 
   useEffect(() => {
