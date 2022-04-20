@@ -15,6 +15,7 @@ import AddResource from "../components/AddResourceButton"
 import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
 import { Typeahead } from 'react-bootstrap-typeahead';
 
+
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
   const navigate = useNavigate();
