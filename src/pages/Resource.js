@@ -1,24 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { FetchPage } from '../hooks/FetchPage'
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-
-
 import React, { useState, useEffect, Fragment } from "react";
-import GetFirebase from '../GetFirebase'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useAuth} from "../AuthContext"
 import {useNavigate} from "react-router-dom"
 import SignOut from "../SignOut"
-import {getResources} from "../firebase"
 import firebase from "../firebase";
-import ResourceCard from "../components/ResourceCard";
 import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form, FormControl } from 'react-bootstrap';
-import CategoryNav from "../components/CategoryNav";
-import TagNav from "../components/TagNav";
-import SearchBar from "../components/SearchBar"
 import AddResource from "../components/AddResourceButton"
-import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
-import { Typeahead } from 'react-bootstrap-typeahead';
 
 import { Card } from 'react-bootstrap';
 
