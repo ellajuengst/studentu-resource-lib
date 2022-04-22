@@ -33,7 +33,7 @@ export default function ResourceCard(resource) {
                 <Card.Text>{desc}</Card.Text>
                 
 
-                <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id}>
+                <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id} source={resource}>
                     View 
                 </Button>
                 {currentUser && (
