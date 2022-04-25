@@ -9,6 +9,10 @@ export default function ResourceCard(resource) {
     const {currentUser} = useAuth();
     const navigate = useNavigate();
 
+    let title = resource.title;
+    let desc = resource.desc;
+    let id = resource.id;
+
     function navigateToEditResource() {
         // navigate("/edit-resource");
         navigate(
@@ -21,10 +25,17 @@ export default function ResourceCard(resource) {
           );
     }
 
-    let title = resource.title;
-    let desc = resource.desc;
-    let id = resource.id;
+    function navigateToResource() {
+        navigate(
+            `/Resource/${id}`,
+            {
+                state: {
+                    source: resource
+                }
+            }
 
+        )
+    }
 
     return (
         <Card>
@@ -32,8 +43,8 @@ export default function ResourceCard(resource) {
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{desc}</Card.Text>
                 
-
-                <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id} source={resource}>
+                <Button variant="link" onClick={navigateToResource} key={id} source={resource}>
+                {/* <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id} source={resource}> */}
                     View 
                 </Button>
                 {currentUser && (
@@ -44,3 +55,4 @@ export default function ResourceCard(resource) {
         </Card>
     )
 }
+
