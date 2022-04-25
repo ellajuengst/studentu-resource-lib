@@ -162,7 +162,7 @@ textarea {
     background-color: color(blue);
     box-shadow: 3px 3px 10px 1px #e9e9e9;
     border: none;
-    margin: 0 1em;
+    margin-right: 1em;
 }
 
 .btn-primary:hover {
@@ -170,6 +170,7 @@ textarea {
     box-shadow: 3px 3px 10px 1px #e9e9e9;
     border: none;
 }
+
 
 .sidebar.navbar {
     background-color: color(grey1)
@@ -391,3 +392,15 @@ textarea {
         margin: 0 1em;
     }
 }
+
+.flex-center-col {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: .5em 0;
+
+}
+
+

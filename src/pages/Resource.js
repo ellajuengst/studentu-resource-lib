@@ -59,39 +59,39 @@ export default function Resource(resource) {
 
     return(
 
-    <Container>
+    <Container fluid className="flex-center-col">
         <Container fluid={true}>
-        <Stack className="resource-library-header" direction="horizontal" gap={3}>
-            <h1 className="resource-library-title me-auto">Resource Library</h1>
-            {currentUser ? (
-            <>
-        <Button variant="outline-secondary" disabled>Admin Mode</Button>
-        <div className="header-btn-holder">
-        <AddResource />
-            <SignOut />
-        </div>
-            
-            </>
-            ) : 
-                <Button onClick={navigateToSignIn}>
-                Admin Login
-                </Button>
-            }
-        </Stack>
-    </Container>
+            <Stack className="resource-library-header" direction="horizontal" gap={3}>
+                <h1 className="resource-library-title me-auto">Resource Library</h1>
+                {currentUser ? (
+                <>
+            <Button variant="outline-secondary" disabled>Admin Mode</Button>
+            <div className="header-btn-holder">
+            <AddResource />
+                <SignOut />
+            </div>
+                
+                </>
+                ) : 
+                    <Button onClick={navigateToSignIn}>
+                    Admin Login
+                    </Button>
+                }
+            </Stack>
+        </Container>
 
 
-    <Card>
-        <Card.Body>
-        {currentUser && (
-                            <Button variant="link" onClick={navigateToEditResource}>Edit</Button>     
-                        ) 
-                    }
-            <Card.Title>{rpage.title}</Card.Title>
-            <Card.Text>{rpage.desc} </Card.Text>
-            <Card.Text><a href={rpage.reference}> Open </a> </Card.Text>
-        </Card.Body>
-    </Card>
+        <Card style={{width: '50%'}}>
+            <Card.Body>
+            {currentUser && (
+                                <Button style={{float: "right"}} variant="link" onClick={navigateToEditResource}>Edit</Button>     
+                            ) 
+                        }
+                <Card.Title>{rpage.title}</Card.Title>
+                <Card.Text>{rpage.desc} </Card.Text>
+                <Card.Text><Button href={rpage.reference}> Open </Button> </Card.Text>
+            </Card.Body>
+        </Card>
 
     </Container>
 /*
