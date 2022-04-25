@@ -3,7 +3,7 @@ import { FetchPage } from '../hooks/FetchPage'
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import React, { useState, useEffect, Fragment } from "react";
 import {useAuth} from "../AuthContext"
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useLocation } from "react-router-dom"
 import SignOut from "../SignOut"
 import firebase from "../firebase";
 import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form, FormControl } from 'react-bootstrap';
@@ -14,6 +14,25 @@ import { Card } from 'react-bootstrap';
 export default function Resource(resource) {
     const {currentUser} = useAuth();
     const navigate = useNavigate();
+    const { state } = useLocation();
+
+    // const [loading, setLoading] = useState(false);
+    // const [resources, setResources] = useState([]);
+    // const [tags, setTags] = useState([]);
+    // const [categories, setCategories] = useState([]);
+  
+    // const ref = firebase.firestore();
+    // const [selectedTags, setSelectedTags] = useState([]);
+    // const [selectedCategory, setSelectedCategory] = useState('All');
+  
+    // const [selectedResources, setSelectedResources] = useState([]);
+
+    
+
+    /*Code for fetching sorces*/
+    const { id } = useParams()
+    const { error, rpage } = FetchPage('resources', id)
+    
 
     function navigateToEditResource() {
         // navigate("/edit-resource");
@@ -21,29 +40,11 @@ export default function Resource(resource) {
             '/edit-resource',
             {
               state: {
-               source: resource
+               source: state.source
               }
             }
           );
     }
-
-
-    const [loading, setLoading] = useState(false);
-    const [resources, setResources] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [categories, setCategories] = useState([]);
-  
-    const ref = firebase.firestore();
-    const [selectedTags, setSelectedTags] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('All');
-  
-    const [selectedResources, setSelectedResources] = useState([]);
-
-    
-
-    /*Code for fetching sorces*/
-    const { id } = useParams()
-    const { error, rpage } = FetchPage('resources', id)
 
     if (error) {
         return <div> {error} </div>
