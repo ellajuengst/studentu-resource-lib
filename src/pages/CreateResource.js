@@ -159,100 +159,106 @@ export default function CreateResource() {
   }, []);
 
   return (
-  <div className="add-r-Container">
-      <h1>Create Resource</h1>
-      <div className="inputBox">
-        <h3>Add New Resource Information</h3>
-        <Form.Group className="form-group">
-          <Form.Label>Resource Title <span className="required">*</span></Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            placeholder = "Resource Title"
-            value={values.title}
+  
+  <div>
+    <div className='back-home'>
+      <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">&laquo; Exit</Button>
+    </div>
+    <div className="add-r-Container">
+        <h1>Create Resource</h1>
+        <div className="inputBox">
+          <h3>Add New Resource Information</h3>
+          <Form.Group className="form-group">
+            <Form.Label>Resource Title <span className="required">*</span></Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              placeholder = "Resource Title"
+              value={values.title}
+              onChange={handleFormChange}
+            />
+            {formerrors.title && (
+              <p className="text-danger">{formerrors.title}</p>
+            )}
+          </Form.Group>
+          <Form.Group className="form-group">
+            <Form.Label>Resource Description <span className="required">*</span></Form.Label>
+            <Form.Control
+              type="textarea"
+              as="textarea"
+              name="desc"
+              placeholder = "Resource Description"
+              value={values.desc}
+              onChange={handleFormChange}
+            />
+            {formerrors.desc && (
+              <p className="text-danger">{formerrors.desc}</p>
+            )}
+          </Form.Group>
+          <Form.Group className="form-group">
+            <Form.Label>Category <span className="required">*</span></Form.Label>
+          <Form.Select
+            id="category" 
+            name="category"
+            value={values.category}
             onChange={handleFormChange}
-          />
-          {formerrors.title && (
-            <p className="text-danger">{formerrors.title}</p>
+          >
+            <option>Select a Category</option>
+            {categoryList.map(
+              (category) => (
+                <option value={category.id}>{category.name}</option>
+              )
+            )}
+          </Form.Select>
+          {formerrors.category && (
+            <p className="text-danger">{formerrors.category}</p>
           )}
-        </Form.Group>
-        <Form.Group className="form-group">
-          <Form.Label>Resource Description <span className="required">*</span></Form.Label>
-          <Form.Control
-            type="textarea"
-            as="textarea"
-            name="desc"
-            placeholder = "Resource Description"
-            value={values.desc}
-            onChange={handleFormChange}
-          />
-          {formerrors.desc && (
-            <p className="text-danger">{formerrors.desc}</p>
-          )}
-        </Form.Group>
-        <Form.Group className="form-group">
-          <Form.Label>Category <span className="required">*</span></Form.Label>
-        <Form.Select
-          id="category" 
-          name="category"
-          value={values.category}
-          onChange={handleFormChange}
-        >
-          <option>Select a Category</option>
-          {categoryList.map(
-            (category) => (
-              <option value={category.id}>{category.name}</option>
-            )
-          )}
-        </Form.Select>
-        {formerrors.category && (
-          <p className="text-danger">{formerrors.category}</p>
-        )}
-        </Form.Group>
-        <Form.Group className="form-group">
-          <Form.Label>Tags</Form.Label>
-          <Typeahead
-            allowNew
-            id="tags"
-            labelKey="name"
-            multiple
-            name="tags"
-            newSelectionPrefix="Select to add a new tag: "
-            onChange={handleTagChange}
-            options={tagList}
-            placeholder="Select tags"
-            selected={values.tags}
-          />
-        </Form.Group>
+          </Form.Group>
+          <Form.Group className="form-group">
+            <Form.Label>Tags</Form.Label>
+            <Typeahead
+              allowNew
+              id="tags"
+              labelKey="name"
+              multiple
+              name="tags"
+              newSelectionPrefix="Select to add a new tag: "
+              onChange={handleTagChange}
+              options={tagList}
+              placeholder="Select tags"
+              selected={values.tags}
+            />
+          </Form.Group>
+          
+          
+          <Form.Group controlId="formFile" className="mb-3 form-group">
+            <Form.Label>Select File <b>OR</b> Add a Link <span className="required">*</span></Form.Label>
+            <Form.Control 
+              type="file" 
+              name="attachment"
+              onChange={handleFormChange}
+            />
+            <div className="flex-center"><hr style={{color: "black", width: "40%"}} /><b className="or">OR</b><hr style={{color: "black", width: "40%"}} /></div>
+            <Form.Control 
+              type="text" 
+              name="link"
+              value={values.link} 
+              onChange={handleFormChange}
+              placeholder="Paste the resource link"
+            />
+            {formerrors.ref && (
+            <p className="text-danger">{formerrors.ref}</p>
+            )}
+          </Form.Group>
+          <div className="btn-holder">
+            <Button onClick={handleSubmit}>
+              Submit
+            </Button>
+          </div>
         
-        
-        <Form.Group controlId="formFile" className="mb-3 form-group">
-          <Form.Label>Select File <b>OR</b> Add a Link <span className="required">*</span></Form.Label>
-          <Form.Control 
-            type="file" 
-            name="attachment"
-            onChange={handleFormChange}
-          />
-          <div className="flex-center"><hr style={{color: "black", width: "40%"}} /><b className="or">OR</b><hr style={{color: "black", width: "40%"}} /></div>
-          <Form.Control 
-            type="text" 
-            name="link"
-            value={values.link} 
-            onChange={handleFormChange}
-            placeholder="Paste the resource link"
-          />
-          {formerrors.ref && (
-          <p className="text-danger">{formerrors.ref}</p>
-          )}
-        </Form.Group>
-        <div className="btn-holder">
-          <Button onClick={handleSubmit}>
-            Submit
-          </Button>
         </div>
-       
+        <hr />
       </div>
-      <hr />
     </div>
   )
 }

@@ -94,9 +94,17 @@ export default function ResourceLibrary() {
 
   
   function handleSelected(selected) {
-    const resource = selected[0];
-    navigate(`/Resource/${resource.id}`);
-  }
+    const searchSelected = selected[0];
+    navigate(
+      `/Resource/${searchSelected.id}`,
+      {
+          state: {
+              source: searchSelected
+          }
+      }
+
+  )
+}
 
 
   function handleCategorySelect(e) {
