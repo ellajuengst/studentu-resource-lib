@@ -150,6 +150,17 @@ textarea {
   text-align: center;
 }
 
+.blue-strip {
+  margin: 2em;
+  border-color: #407CCC;
+  border-style: solid;
+  border-width: .6em;  
+}
+
+.back-home {
+  margin: 1.4em;
+}
+
 .btn-primary {
   background-color: #407CCC;
   -webkit-box-shadow: 3px 3px 10px 1px #e9e9e9;

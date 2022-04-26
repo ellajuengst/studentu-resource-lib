@@ -30,7 +30,7 @@ function SignIn() {
 
     return(
         <div className="sign-in">
-            <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">← Back</Button>
+            <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">&laquo; Back</Button>
             <h2>Admin Sign In</h2>
             <Form onSubmit={(e) => handleSignin(e)}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

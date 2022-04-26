@@ -46,6 +46,7 @@ export default function Resource(resource) {
           );
     }
 
+
     if (error) {
         return <div> {error} </div>
     }
@@ -79,6 +80,10 @@ export default function Resource(resource) {
                     </Button>
                 }
             </Stack>
+            <p className="blue-strip">  </p>
+            <div className='back-home'>
+                <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">&laquo; Back</Button>
+            </div>
         </Container>
 
 
