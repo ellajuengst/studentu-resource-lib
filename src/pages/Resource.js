@@ -8,10 +8,16 @@ import SignOut from "../SignOut"
 import firebase from "../firebase";
 import { Container, Nav, NavItem, Row, Navbar, NavDropdown, Button, Col, Stack, Form, FormControl } from 'react-bootstrap';
 import AddResource from "../components/AddResourceButton"
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import {storage} from "../firebase"
+
+
 
 import { Card } from 'react-bootstrap';
 
 export default function Resource(resource) {
+
+
     const {currentUser} = useAuth();
     const navigate = useNavigate();
     const { state } = useLocation();
@@ -32,7 +38,7 @@ export default function Resource(resource) {
     /*Code for fetching sorces*/
     const { id } = useParams()
     const { error, rpage } = FetchPage('resources', id)
-    
+
 
     function navigateToEditResource() {
         // navigate("/edit-resource");
@@ -58,6 +64,8 @@ export default function Resource(resource) {
     function navigateToSignIn() {
         navigate("/login");
       }
+
+    if(rpage.type === "link"){
 
     return(
 
@@ -100,14 +108,60 @@ export default function Resource(resource) {
         </Card>
 
     </Container>
-/*
-<div className="resource-page">
-            
-<h1>{rpage.title}</h1>
-<p>{rpage.desc}</p>
-<a href={rpage.reference}> View file </a>
-</div>
-*/
 
     )
+ }
+
+ else {
+    getDownloadURL(ref(storage, rpage.reference))
+    .then((url) => {
+      // `url` is the download URL for 'images/stars.jpg'
+  
+      // Or inserted into an <img> element
+      const file = document.getElementById('fileUpload');
+      file.setAttribute('src', url);
+
+    })
+        return(
+            <Container fluid className="flex-center-col">
+            <Container fluid={true}>
+                <Stack className="resource-library-header" direction="horizontal" gap={3}>
+                    <h1 className="resource-library-title me-auto">Resource Library</h1>
+                    {currentUser ? (
+                    <>
+                <Button variant="outline-secondary" disabled>Admin Mode</Button>
+                <div className="header-btn-holder">
+                <AddResource />
+                    <SignOut />
+                </div>
+                    
+                    </>
+                    ) : 
+                        <Button onClick={navigateToSignIn}>
+                        Admin Login
+                        </Button>
+                    }
+                </Stack>
+                <p className="blue-strip">  </p>
+                <div className='back-home'>
+                    <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">&laquo; Back</Button>
+                </div>
+            </Container>
+
+
+            <Card style={{width: '50%'}}>
+                <Card.Body>
+                {currentUser && (
+                                    <Button style={{float: "right"}} variant="link" onClick={navigateToEditResource}>Edit</Button>     
+                                ) 
+                            }
+                    <Card.Title>{rpage.title}</Card.Title>
+                    <Card.Text>{rpage.desc} </Card.Text>
+                    <iframe id='fileUpload' height="600" width="500"></iframe>  
+                </Card.Body>
+            </Card>
+
+        </Container>
+        )
+ }
 }

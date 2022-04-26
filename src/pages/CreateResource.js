@@ -6,7 +6,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import {storage} from "../firebase"
-import {ref, uploadBytes} from "firebase/storage";
+import {ref, uploadBytes,getDownloadURL} from "firebase/storage";
 
 export default function CreateResource() {
   const [values, setValues] = useState({
