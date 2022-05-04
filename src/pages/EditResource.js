@@ -7,9 +7,8 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { storage } from "../firebase"
 import { deleteObject, ref, uploadBytes} from "firebase/storage";
-import { Card } from 'react-bootstrap';
 
-export default function EditResource(updatedResource) {
+export default function EditResource() {
   const { state } = useLocation();
 
   const [values, setValues] = useState({
@@ -92,14 +91,6 @@ export default function EditResource(updatedResource) {
       .doc(updatedResource.id)
       .update(updatedResource)
       .then(() => {
-        // setResources((prev) =>
-        //   prev.map((element) => {
-        //     if (element.id !== updatedResource.id) {
-        //       return element;
-        //     }
-        //     return updatedResource;
-        //   })
-        // );
         navigate('/')
       })
       .catch((err) => {
