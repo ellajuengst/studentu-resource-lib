@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import GetFirebase from '../GetFirebase'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Routes, Route} from "react-router-dom";
 import {useAuth} from "../AuthContext"
 import {useNavigate} from "react-router-dom"
 import SignOut from "../SignOut"
