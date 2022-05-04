@@ -160,7 +160,7 @@ export default function CreateResource() {
 
   return (
   
-  <div>
+  <div data-testid="create-resource">
     <div className='back-home'>
       <Button variant="link" onClick={() => {navigate('/')}} className="back-btn">&laquo; Exit</Button>
     </div>
@@ -211,7 +211,7 @@ export default function CreateResource() {
             )}
           </Form.Select>
           {formerrors.category && (
-            <p className="text-danger">{formerrors.category}</p>
+            <p data-testid="category-error" className="text-danger">{formerrors.category}</p>
           )}
           </Form.Group>
           <Form.Group className="form-group">
@@ -251,7 +251,7 @@ export default function CreateResource() {
             )}
           </Form.Group>
           <div className="btn-holder">
-            <Button onClick={handleSubmit}>
+            <Button data-testid="submit-button" onClick={handleSubmit}>
               Submit
             </Button>
           </div>
