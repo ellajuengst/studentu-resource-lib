@@ -69,7 +69,7 @@ export default function Resource(resource) {
 
     return(
 
-    <Container fluid className="flex-center-col">
+    <Container fluid className="flex-center-col" data-testid="resource-page">
         <Container fluid={true}>
             <Stack className="resource-library-header" direction="horizontal" gap={3}>
                 <h1 className="resource-library-title me-auto">Resource Library</h1>
@@ -123,7 +123,7 @@ export default function Resource(resource) {
 
     })
         return(
-            <Container fluid className="flex-center-col">
+            <Container fluid className="flex-center-col" data-testid="resource-page">
             <Container fluid={true}>
                 <Stack className="resource-library-header" direction="horizontal" gap={3}>
                     <h1 className="resource-library-title me-auto">Resource Library</h1>

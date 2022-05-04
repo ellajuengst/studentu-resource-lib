@@ -38,17 +38,17 @@ export default function ResourceCard(resource) {
     }
 
     return (
-        <Card>
+        <Card data-testid="resource-card">
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{desc}</Card.Text>
                 
-                <Button variant="link" onClick={navigateToResource} key={id} source={resource}>
+                <Button data-testid="view-link" variant="link" onClick={navigateToResource} key={id} source={resource}>
                 {/* <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id} source={resource}> */}
                     View 
                 </Button>
                 {currentUser && (
-                        <Button variant="link" onClick={navigateToEditResource}>Edit</Button>     
+                        <Button data-testid="edit-link" variant="link" onClick={navigateToEditResource}>Edit</Button>     
                     ) 
                 }
             </Card.Body>

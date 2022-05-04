@@ -102,13 +102,11 @@ export default function ResourceLibrary() {
               source: searchSelected
           }
       }
-
   )
 }
 
 
   function handleCategorySelect(e) {
-    console.log(e.target.innerHTML)
     setSelectedCategory(e.target.innerHTML)
   }
 
@@ -130,15 +128,14 @@ export default function ResourceLibrary() {
     getCategories();
 
   }, []);
-  
-  
+    
   return ( 
-    <Container fluid={true}>
+    <Container data-testid="resource-library" fluid={true}>
         <Stack className="resource-library-header" direction="horizontal" gap={3}>
             <h1 className="resource-library-title me-auto">Resource Library</h1>
             {currentUser ? (
             <>
-           <Button variant="outline-secondary" disabled>Admin Mode</Button>
+           <Button data-testid="admin-mode" variant="outline-secondary" disabled>Admin Mode</Button>
            <div className="header-btn-holder">
            <AddResource />
             <SignOut />
@@ -146,7 +143,7 @@ export default function ResourceLibrary() {
             
             </>
             ) : 
-                <Button onClick={navigateToSignIn}>
+                <Button data-testid="admin-login" onClick={navigateToSignIn}>
                 Admin Login
                 </Button>
             }

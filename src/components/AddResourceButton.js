@@ -6,6 +6,6 @@ export default function AddResource() {
   const navigate = useNavigate();
 
   return (
-    <Button onClick={() =>  navigate("/create-resource")} className="add-resource-btn">Add Resource +</Button>
+    <Button data-testid="add-resource-button" onClick={() =>  navigate("/create-resource")} className="add-resource-btn">Add Resource +</Button>
   )
 }
