@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom"
 import {useAuth} from "../AuthContext"
 import {Form, Button} from "react-bootstrap"
 
+// sign in page
 function SignIn() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -11,6 +12,7 @@ function SignIn() {
     const navigate = useNavigate();
     const {signin} = useAuth();
     
+    // signs in the user using firebase auth
     const handleSignin = (e) => {
         e.preventDefault();
         setError('');

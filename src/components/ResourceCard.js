@@ -3,8 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import {useAuth} from "../AuthContext"
 import {useNavigate} from "react-router-dom"
 
-import { Link } from 'react-router-dom';
-
+// component for each resource card in resource library
 export default function ResourceCard(resource) {
     const {currentUser} = useAuth();
     const navigate = useNavigate();
@@ -26,6 +25,7 @@ export default function ResourceCard(resource) {
     }
 
     function navigateToResource() {
+        // navigate to resource page
         navigate(
             `/Resource/${id}`,
             {
@@ -44,7 +44,6 @@ export default function ResourceCard(resource) {
                 <Card.Text>{desc}</Card.Text>
                 
                 <Button data-testid="view-link" variant="link" onClick={navigateToResource} key={id} source={resource}>
-                {/* <Button variant="link" onClick={() => navigate(`/Resource/${id}`)} key={id} source={resource}> */}
                     View 
                 </Button>
                 {currentUser && (

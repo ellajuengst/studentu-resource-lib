@@ -15,7 +15,7 @@ import AddResource from "../components/AddResourceButton"
 import {ReactComponent as ArrowDown} from '../assets/arrow-down.svg'
 import { Typeahead } from 'react-bootstrap-typeahead';
 
-
+// resource library page
 export default function ResourceLibrary() {
   const {currentUser} = useAuth();
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function ResourceLibrary() {
     navigate("/login");
   }
 
+  // get all resources in resource collection on firebase
   function getResources() {
     setLoading(true);
     const resourcesRef = ref.collection("resources")
@@ -49,6 +50,7 @@ export default function ResourceLibrary() {
     });
   }
 
+  // get all tags in tag collection on firebase
   function getTags() {
     const tagsRef = ref.collection("tags")
     tagsRef.onSnapshot((querySnapshot) => {
@@ -60,6 +62,7 @@ export default function ResourceLibrary() {
     });
   }
 
+  // get all categories in category collection on firebase
   function getCategories() {
     const catRef = ref.collection("categories")
     catRef.onSnapshot((querySnapshot) => {
@@ -71,6 +74,7 @@ export default function ResourceLibrary() {
     });
   }
 
+  // add tag to selectedTags
   function selectTag(e) {
     const tag = e.target.innerHTML;   
     const index = selectedTags.indexOf(tag);
@@ -82,6 +86,7 @@ export default function ResourceLibrary() {
     }
   }
 
+  // remove tag from selectedTags
   function removeTag(e) {
     const tag = e.target.id; 
     const index = selectedTags.indexOf(tag);
@@ -92,7 +97,7 @@ export default function ResourceLibrary() {
     }
   }
 
-  
+  // handle search bar changes
   function handleSelected(selected) {
     const searchSelected = selected[0];
     navigate(
@@ -102,10 +107,10 @@ export default function ResourceLibrary() {
               source: searchSelected
           }
       }
-  )
-}
+    )
+  }
 
-
+  // update selected category
   function handleCategorySelect(e) {
     setSelectedCategory(e.target.innerHTML)
   }
@@ -179,30 +184,20 @@ export default function ResourceLibrary() {
                 </Col>
                 <Col>
                     <div className="search-bar-container">
-                    <Form.Group className="search-div">
-                      <Form className="search-bar d-flex">
-  
-                      <Typeahead
-                        id="basic-typeahead-single"
-                        labelKey={option => `${option.title}: ${option.desc}`}
-                        options={resources}
-                        placeholder="Search for a resource..."
-                        onChange={handleSelected}
-        
-                      />
-                      </Form>
-
-                    </Form.Group>
-                      {/* <Form className="search-bar d-flex">
-                        <FormControl
-                          type="search"
-                          placeholder="Search"
-                          className="me-2"
-                          aria-label="Search"
+                      <Form.Group className="search-div">
+                        <Form className="search-bar d-flex">
+    
+                        <Typeahead
+                          id="basic-typeahead-single"
+                          labelKey={option => `${option.title}: ${option.desc}`}
+                          options={resources}
+                          placeholder="Search for a resource..."
+                          onChange={handleSelected}
+          
                         />
-                        <Button variant="outline-secondary">Search</Button>
-                      </Form> */}
-                      
+                        </Form>
+
+                      </Form.Group>
                     </div>
                     <div className="tags-container">
                     {selectedTags.map((tag) => {
@@ -225,7 +220,6 @@ export default function ResourceLibrary() {
                         }).map((resource) => (
                             <Col lg={3} md={6} sm={12}>
                             <ResourceCard {...resource } key={resource.id} />
-
                             </Col>
                         ))}
                         </Row>

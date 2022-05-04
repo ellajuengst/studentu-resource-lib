@@ -33,7 +33,6 @@ export default function Autocomplete(props) {
     }
 
     return (
- 
             <div style={{ width: 400 }}>
                 <ReactSearchAutocomplete
                 items={items}
@@ -45,6 +44,6 @@ export default function Autocomplete(props) {
                 formatResult={formatResult}
                 />
             </div>
-    
+
     )
 }

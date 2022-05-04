@@ -25,9 +25,11 @@ export default function CreateResource() {
   const [categoryList, setCategoryList] = useState([]);
   const [tagList, setTagList] = useState([]);
 
+  // add resource to firebase using values
   function addResource() {
     let type, reference;
     const refID = uuidv4()
+    // if attachment value is not null, then upload to firebase storage
     if(values.attachment != null) {
       type = "attachment"
       reference = refID;
@@ -46,9 +48,9 @@ export default function CreateResource() {
       tags: values.tags,
       id: uuidv4()
     }
+    // add new resource document to resource collection on firebase
     resourceRef
-      //.doc() use if for some reason you want that firestore generates the id
-      .doc(newResource.id) // set resource id
+      .doc(newResource.id)
       .set(newResource)
       .then(() => {
         navigate('/')
@@ -58,6 +60,7 @@ export default function CreateResource() {
       });
   }
 
+  // add new tag document to tag collection on firebase
   function addTag(tagName) {
     const newTag = {
       name: tagName, 
@@ -65,6 +68,7 @@ export default function CreateResource() {
     tagRef.add(newTag);
   }
 
+  // get all categories from firebase
   function getCategoryList() {
     firebase.firestore().collection("categories").onSnapshot((querySnapshot) => {
       const items = [];
@@ -75,6 +79,7 @@ export default function CreateResource() {
     });
   }
 
+  // get all tags from firebase
   function getTagList() {
     firebase.firestore().collection("tags").onSnapshot((querySnapshot) => {
       const items = [];
@@ -85,6 +90,7 @@ export default function CreateResource() {
     });
   }
 
+  // update values when form input changes
   const handleFormChange = (event) => {
     if(event.target.name === "attachment") {
       setValues((values) => ({
@@ -100,11 +106,11 @@ export default function CreateResource() {
      }
    };
 
+   // update values.tag when tag inputs on form changes
    const handleTagChange = (tags) => {
     for(let i = 0; i < tags.length; i++){
       if(typeof tags[i] !== 'string') {
         tags[i] = tags[i].name;
-        console.log(tags[i])
       }
     }
     setValues((values) => ({
@@ -113,6 +119,7 @@ export default function CreateResource() {
     }));
    }
 
+   // form validation and associated errors
    const validate = () => {
      let errors = {};
      if(values.title === "") {
