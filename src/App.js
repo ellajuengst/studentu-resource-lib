@@ -1,5 +1,5 @@
 import {React} from "react";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Routes, Route} from "react-router-dom";
 import GetFirebase from "./GetFirebase";
 import SnapshotFirebase from "./SnapshotFirebase";
 import {AuthProvider} from "./AuthContext";
@@ -13,7 +13,7 @@ import Resource from "./pages/Resource"
 function App() {
   const get = false;
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={get ? <GetFirebase /> : <ResourceLibrary /> }/>
@@ -23,7 +23,7 @@ function App() {
           <Route path="/resource/:id" element={<Resource />} />
         </Routes>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

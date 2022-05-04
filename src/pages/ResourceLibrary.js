@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import GetFirebase from '../GetFirebase'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Routes, Route} from "react-router-dom";
 import {useAuth} from "../AuthContext"
 import {useNavigate} from "react-router-dom"
 import SignOut from "../SignOut"
@@ -208,8 +208,8 @@ export default function ResourceLibrary() {
                     </div>
                     
                     <Container className="resources-container">
-                        {loading ? <p>Loading...</p> : null}
-                          <Row>
+                        {loading ? <p data-testid="loading">Loading...</p> : null}
+                          <Row data-testid="resources">
                           {selectedResources.filter((r) => {
                             if (selectedCategory == 'All' || r.category == selectedCategory) {
                               return checkIfRender(r)
