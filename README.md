@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Install dependencies
+## Install dependencies
 
 Run `npm ci` to install dependencies needed to run the application.
 
