@@ -213,8 +213,8 @@ export default function ResourceLibrary() {
                     </div>
                     
                     <Container className="resources-container">
-                        {loading ? <p>Loading...</p> : null}
-                          <Row>
+                        {loading ? <p data-testid="loading">Loading...</p> : null}
+                          <Row data-testid="resources">
                           {selectedResources.filter((r) => {
                             if (selectedCategory == 'All' || r.category == selectedCategory) {
                               return checkIfRender(r)

@@ -1,5 +1,5 @@
 import {React} from "react";
-import { act, render, screen, cleanup, fireEvent } from "@testing-library/react"
+import { act, render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react"
 import {BrowserRouter} from "react-router-dom";
 import ResourceLibrary from "../pages/ResourceLibrary"
 import {AuthContext} from "../AuthContext";
@@ -42,3 +42,11 @@ test("Renders add resource button for admins", () => {
     const element = screen.getByTestId("add-resource-button");
     expect(element).toBeInTheDocument();
 }); 
+
+// Tests if resources container is rendered
+test("Renders resource container", async () => {
+    render(<AuthContext.Provider value={value_admin}><BrowserRouter><ResourceLibrary/></BrowserRouter></AuthContext.Provider>);
+    const element = screen.getByTestId("resources");
+    expect(element).toBeInTheDocument();
+}); 
+
