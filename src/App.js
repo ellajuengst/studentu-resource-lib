@@ -5,7 +5,7 @@
 // import {} from "./firebase";
 
 import {React} from "react";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Routes, Route} from "react-router-dom";
 import GetFirebase from "./GetFirebase";
 import SnapshotFirebase from "./SnapshotFirebase";
 import {AuthProvider} from "./AuthContext";
@@ -20,7 +20,7 @@ function App() {
   const get = false;
   // const get = true; // requires you to refresh to update
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={get ? <GetFirebase /> : <ResourceLibrary /> }/>
@@ -30,7 +30,7 @@ function App() {
           <Route path="/resource/:id" element={<Resource />} />
         </Routes>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
